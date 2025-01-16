@@ -9,6 +9,9 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import org.dis.back.BRException;
 import org.dis.back.EmpleadoBR;
+import org.dis.back.TipoEmpleado;
+
+import java.util.Arrays;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -35,7 +38,10 @@ public class MyUI extends UI {
         final VerticalLayout salarioNetoContenedor = new VerticalLayout();
 
         //Parametros salario bruto
-        TextField tipo = creaLabel("tipo de empleado");
+        //TextField tipo = creaLabel("tipo de empleado");
+        ComboBox<String> tipoEmpleadoComboBox = new ComboBox<>("Tipo de empleado",
+        Arrays.asList(TipoEmpleado.ENCARGADO, TipoEmpleado.VENDEDOR));
+
         TextField ventaMes = creaLabel("ventas del mes");
         TextField horasExtra = creaLabel("horas extra");
 
@@ -43,10 +49,10 @@ public class MyUI extends UI {
         //TextField inSalarioNeto = creaLabel("introduce salario neto");
         TextField inSalarioBruto = creaLabel("introduce salario bruto");
 
-        salarioBruto.addComponents(tipo, ventaMes, horasExtra);
+        salarioBruto.addComponents(tipoEmpleadoComboBox, ventaMes, horasExtra);
         Button botonSalarioBruto = new Button("Calcular salario bruto");
         botonSalarioBruto.addClickListener(e -> {
-            String tipoEmpleadoIn = tipo.getValue();
+            String tipoEmpleadoIn = tipoEmpleadoComboBox.getValue();
             double ventasMesIn = Double.parseDouble(ventaMes.getValue());
             double horasExtraIn = Double.parseDouble(horasExtra.getValue());
 
@@ -82,7 +88,7 @@ public class MyUI extends UI {
 
         });
 
-        salarioBruto.addComponents(tipo, ventaMes, horasExtra);
+        salarioBruto.addComponents(tipoEmpleadoComboBox, ventaMes, horasExtra);
         salarioBrutoContenedor.addComponents(salarioBruto, botonSalarioBruto);
 
         salarioNeto.addComponents(inSalarioBruto);
